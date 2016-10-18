@@ -8,6 +8,7 @@ using Newtonsoft.Json.Serialization;
 using FluentValidation.WebApi;
 using ZUS.Zeus.BikeService.Handlers;
 using ZUS.Zeus.BikeService.Formatters;
+using ZUS.Zeus.BikeService.Filters;
 
 namespace ZUS.Zeus.BikeService
 {
@@ -38,6 +39,10 @@ namespace ZUS.Zeus.BikeService
 
             config.Formatters.Add(new QrCodeFormatter());
             config.Formatters.Add(new PdfFormatter());
+
+
+            config.Filters.Add(new ValidateModelStateAttribute());
+            config.Filters.Add(new ExecutionTimeFilterAttribute());
 
             FluentValidationModelValidatorProvider.Configure(config);
         }

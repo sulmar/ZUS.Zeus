@@ -44,6 +44,16 @@ namespace ZUS.Zeus.Services
             throw new NotImplementedException();
         }
 
+        public Station FindStation(Location location)
+        {
+            var station = _Stations
+                .Where(s => s.Location.Latitude == location.Latitude)
+                .Where(s => s.Location.Longitude == location.Longitude)
+                .FirstOrDefault();
+
+            return station;
+        }
+
         public IList<Bike> GetBikes(int stationId)
         {
             var bikes = _Stations

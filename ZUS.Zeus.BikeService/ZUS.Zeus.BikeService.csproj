@@ -255,6 +255,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Filters\ExecutionTimeFilterAttribute.cs" />
+    <Compile Include="Filters\ValidateModelStateAttribute.cs" />
     <Compile Include="Formatters\GoogleQrCodeFormatter.cs" />
     <Compile Include="Formatters\PdfFormatter.cs" />
     <Compile Include="Formatters\PdfGenerator.cs" />

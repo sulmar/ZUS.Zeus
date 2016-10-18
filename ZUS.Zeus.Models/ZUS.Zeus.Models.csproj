@@ -64,6 +64,7 @@
     <Compile Include="Base.cs" />
     <Compile Include="Bike.cs" />
     <Compile Include="BikeType.cs" />
+    <Compile Include="Converters\LocationTypeConverter.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="PriceList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

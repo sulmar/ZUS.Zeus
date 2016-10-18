@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using ZUS.Zeus.BikeService.Results;
 using ZUS.Zeus.Common;
+using ZUS.Zeus.Models;
 using ZUS.Zeus.Services;
 
 namespace ZUS.Zeus.BikeService.Controllers
@@ -26,6 +27,18 @@ namespace ZUS.Zeus.BikeService.Controllers
         public IHttpActionResult Get(int id)
         {
             var station = _StationsService.GetStation(id);
+
+            if (station == null)
+                return NotFound();
+
+            return Ok(station);
+        }
+
+
+        [HttpGet]
+        public IHttpActionResult Find(Location location)
+        {
+            var station = _StationsService.FindStation(location);
 
             if (station == null)
                 return NotFound();

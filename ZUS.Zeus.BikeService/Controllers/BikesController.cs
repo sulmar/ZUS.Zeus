@@ -58,10 +58,10 @@ namespace ZUS.Zeus.BikeService.Controllers
         public IHttpActionResult Add(Bike bike)
         {
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             _BikesService.AddBike(bike);
 

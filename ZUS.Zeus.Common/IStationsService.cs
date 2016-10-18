@@ -13,6 +13,8 @@ namespace ZUS.Zeus.Common
 
         Station GetStation(int stationId);
 
+        Station FindStation(Location location);
+
         void AddStation(Station station);
 
         void UpdateStation(Station station);

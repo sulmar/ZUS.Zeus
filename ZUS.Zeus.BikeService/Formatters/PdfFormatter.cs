@@ -21,16 +21,17 @@ namespace ZUS.Zeus.BikeService.Formatters
             SupportedMediaTypes.Add(new MediaTypeHeaderValue(supportedMediaType));
         }
 
-        public override async Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
+        public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
         {
             var bike = value as Bike;
 
             var generator = new PdfGenerator();
 
-            MemoryStream stream = generator.Generate(bike);
-
-            var bytes = stream.ToArray();
-            writeStream.Write(bytes, 0, bytes.Length);
+            using (var stream = generator.Generate(bike))
+            {
+                var bytes = stream.ToArray();
+                return writeStream.WriteAsync(bytes, 0, bytes.Length);
+            }
         }
 
         public override bool CanReadType(Type type)

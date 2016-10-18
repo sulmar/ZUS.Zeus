@@ -1,6 +1,7 @@
 ﻿using QRCoder;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,7 @@ using ZUS.Zeus.Models;
 
 namespace ZUS.Zeus.BikeService.Formatters
 {
+
 
     public class QrCodeFormatter : MediaTypeFormatter
     {
@@ -34,29 +36,33 @@ namespace ZUS.Zeus.BikeService.Formatters
             return type == typeof(Bike);
         }
 
-        public override async Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
+        public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
         {
-
             var bike = value as Bike;
 
             var number = HttpUtility.UrlEncode(bike.Number);
 
+            var qrCodeImage = CreateQrCode(number);
+
+            using (var stream = new MemoryStream())
+            {
+                qrCodeImage.Save(stream, ImageFormat.Png);
+                var data = stream.ToArray();
+
+                return writeStream.WriteAsync(data, 0, data.Length);
+            }
+        }
+
+        /// <summary>
+        /// Install-Package QRCoder
+        /// </summary>
+        private static Bitmap CreateQrCode(string number)
+        {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(number, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
-
             var qrCodeImage = qrCode.GetGraphic(20);
-
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                qrCodeImage.Save(ms, ImageFormat.Png);
-                var data = ms.ToArray();
-
-                writeStream.Write(data, 0, data.Length);
-
-            }
-
+            return qrCodeImage;
         }
     }
 }

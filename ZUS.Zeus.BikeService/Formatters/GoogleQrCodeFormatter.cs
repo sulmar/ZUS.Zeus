@@ -45,7 +45,7 @@ namespace ZUS.Zeus.BikeService.Formatters
             {
                 var data = await client.DownloadDataTaskAsync(uri);
 
-                writeStream.Write(data, 0, data.Length);
+                await writeStream.WriteAsync(data, 0, data.Length);
             }
 
 
